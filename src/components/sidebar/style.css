@@ -1,0 +1,12 @@
+.active .MuiButtonBase-root {
+  background-color: var(--primary-main);
+}
+
+.active .MuiButtonBase-root:hover {
+  background-color: var(--primary-dark);
+}
+
+.active .MuiButtonBase-root .MuiTypography-root,
+.active .MuiButtonBase-root .MuiSvgIcon-root {
+  color: var(--white);
+}
