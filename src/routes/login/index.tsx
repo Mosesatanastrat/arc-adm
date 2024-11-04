@@ -16,7 +16,7 @@ function Login() {
 
   const getBranchList = async () => {
     const data = await axios.get(
-      `https://api.arcofficepro.com/api/v1/patients/basic/branches?page=1&limit=20`,
+      import.meta.env.VITE_API_URL + `/patients/basic/branches?page=1&limit=20`,
       {
         headers: {
           Authorization: `Basic YXJjQXBwOmFyY0FwcEA0MzIx`, // Replace 'YOUR_TOKEN_HERE' with the actual token

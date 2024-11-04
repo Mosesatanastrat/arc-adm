@@ -18,6 +18,7 @@ function PatientChecked() {
   const [isOpenPatient, setIsOpenPatient] = useState(false);
   const [patientDetail, setPatientDetail] = useState({} as PatientTypes);
   const [tableData, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
@@ -35,21 +36,28 @@ function PatientChecked() {
   };
 
   const getPatientList = async (type = "all") => {
+    setLoading(true);
     const branchData: any = localStorage.getItem("branchData");
     let parsed = JSON.parse(branchData);
+
     const data = await axios.get(
-      `http://localhost:3010/api/v1/patients-visited/search-list?branchId=${parsed?._id}&type=${type}`,
+      import.meta.env.VITE_API_URL +
+        `/patients-visited/search-list?branchId=${parsed?._id}&type=${type}`,
       {
         headers: {
           Authorization: `Basic YXJjQXBwOmFyY0FwcEA0MzIx`, // Replace 'YOUR_TOKEN_HERE' with the actual token
         },
       }
     );
-    setData(data?.data?.data);
+    if (data) {
+      setLoading(false);
+      setData(data?.data?.data);
+    }
   };
   const saveData = async () => {
     let data = await axios.post(
-      `https://api.arcofficepro.com/api/v1/patient/assign-room/${patientDetail?._id}`,
+      import.meta.env.VITE_API_URL +
+        `/patient/assign-room/${patientDetail?._id}`,
       {
         roomNumber: value, // Replace with your desired room number
       },
@@ -106,7 +114,11 @@ function PatientChecked() {
         </Stack>
       </Stack> */}
       <Box>
-        <PatientList handlePatient={handleOpenPatient} tableData={tableData} />
+        <PatientList
+          handlePatient={handleOpenPatient}
+          tableData={tableData}
+          loading={loading}
+        />
         {/* <CusPagination
           page={1}
           rowPerPage={10}

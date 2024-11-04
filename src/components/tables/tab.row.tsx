@@ -14,7 +14,11 @@ const StyledTableRow = styled((props) => <TableRow {...props} />)(
 );
 
 function TabRow({ children, ...props }: TabRowProps) {
-  return <StyledTableRow {...props}>{children}</StyledTableRow>;
+  return (
+    <StyledTableRow {...props}>
+      <>{children}</>
+    </StyledTableRow>
+  );
 }
 
 export default TabRow;
